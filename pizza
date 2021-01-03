@@ -1,0 +1,60 @@
+#!/bin/bash
+
+#-----order_type----
+counter=1
+order_type=(pickup delivery)
+echo -e "Hello wecome to Pizza Hot! \nenter your name please"
+read NAME
+echo "Hello $NAME"
+sleep 1
+echo "please put you order type."
+echo "-----------------"
+for t in ${order_type[@]}
+do
+echo "$counter. $t"
+((counter ++))
+done
+echo "----------------"
+while read -p "choose one [1-2] >>" selection
+
+do case $selection in
+
+1) echo "you have choosen ${order_type[0]}."
+break;;
+2) echo "you have choosen ${order_type[1]}."
+break;;
+*) echo "you didn't choose a correct order, please try again.";;
+
+
+done
+
+#---Crust_type----
+echo ""
+sleep 1
+echo "please put your orders below"
+echo "------------------------------"
+pizza_crust=(Thin_crust chicago_deep_dish NYC_style)
+
+echo "pizza crust"
+for t in ${pizza_crust[@]}
+do
+echo "$counter. $t"
+((counter ++))
+done
+while read -p "please choose crust [1-4] >> " crust
+do case $crust in
+
+1) echo "you have choosen ${pizza_crust[0]}."
+break;;
+2) echo "you have choosen ${pizza_crust[1]}."
+break;;
+3) echo "you have choosen ${pizza_crust[2]}."
+break;;
+4) echo "you have choosen ${pizza_crust[3]}."
+break;;
+*) echo "you didn't choose a correct order, please try again.";;
+
+esac
+done
+
+
