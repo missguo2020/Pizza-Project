@@ -1,13 +1,14 @@
 #!/bin/bash
 
 #-----order_type----
+
 counter=1
 order_type=(pickup delivery)
 echo -e "Hello wecome to Pizza Hot! \nenter your name please"
 read NAME
 echo "Hello $NAME"
 sleep 1
-echo "please put you order type."
+echo "    please put you order type."
 echo "-----------------"
 for t in ${order_type[@]}
 do
@@ -16,6 +17,7 @@ echo "$counter. $t"
 done
 echo "----------------"
 while read -p "choose one [1-2] >>" selection
+selection >> 
 
 do case $selection in
 
@@ -25,9 +27,9 @@ break;;
 break;;
 *) echo "you didn't choose a correct order, please try again.";;
 
-
+esac
 done
-
+counter=1
 #---Crust_type----
 echo ""
 sleep 1
@@ -35,7 +37,8 @@ echo "please put your orders below"
 echo "------------------------------"
 pizza_crust=(Thin_crust chicago_deep_dish NYC_style)
 
-echo "pizza crust"
+echo "      pizza crust"
+echo "----------------------------"
 for t in ${pizza_crust[@]}
 do
 echo "$counter. $t"
@@ -58,3 +61,31 @@ esac
 done
 
 
+counter=1
+toppings=(Pepperoni Ham Tomatoes Onions Jalapeno Cheese Red_Pepper Black_Olives)
+
+echo "      Toppings"
+echo "---------------------------"
+for t in ${toppings[@]}
+do
+echo "$counter. $t" 
+((counter++))
+done
+echo "---------------------------"
+echo ""
+read -p "first topping [1-7] >> " selection
+if [ $selection -eq 1 ]; then
+echo "You have chosen ${toppings[0]} for $ $pepperoniPrice."
+fi
+read -p "second topping [1-7] >> " selection
+if [ $selection -eq 1 ]; then
+echo "You have chosen ${toppings[0]} for $ $pepperoniPrice."
+fi
+read -p "second topping [1-7] >> " selection
+if [ $selection -eq 1 ]; then
+echo "You have chosen ${toppings[0]} for $ $pepperoniPrice."
+fi
+read -p "second topping [1-7] >> " selection
+if [ $selection -eq 1 ]; then
+echo "You have chosen ${toppings[0]} for $ $pepperoniPrice."
+fi
