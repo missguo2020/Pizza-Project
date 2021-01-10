@@ -7,11 +7,13 @@ order=(pickup delivery)
 crust=(thin NY_style sicilian)
 options=(Pepperoni Ham Tomatoes Onions Jalapeno Cheese Red_Pepper Black_Olives)
 drinks=(coke ice_tea beer)
+price=('$2' '$2.99' '$1')
 
 #greeting customer
 
 echo "     Welcome to linux pizza"
 read -p "please enter your name >> " name
+echo ""
 echo "Hello $name we are happy to see you again :) "
 echo ""
 echo "please enter you orders below"
@@ -70,8 +72,8 @@ for t in ${crust[@]}
 #list summary order
 sleep 1
 echo ""
-echo "you have selcted ${crust[${selections[0]}-1]} crust, good choice!, that's most of our customers favorite "
-sleep 4
+echo "you have selcted ${crust[${selections[0]}-1]} crust fo ${price[0]}, good choice! "
+sleep 1
 #give user a list of topping options
 echo ""
 echo "Choose your toppings, maximum of four toppings"
@@ -85,7 +87,7 @@ for t in ${options[@]}
         echo "$counter. $t"
         ((counter ++))
     done
-sleep 1
+sleep 2
 #ask how many toppings they want
 #read -p "How many toppings would you like? Enter 1-8 >> " nt
 
@@ -93,48 +95,70 @@ sleep 1
 echo ""
 while [ $c -lt 5 ]
     do
-            read -p "topping $c [1-8]" selections[$a]
+            read -p "topping $c [1-8]" selections[$a] 
         if [ ${selections[$a]} -gt 8 ] #ADD LESS THAN 1
             then
             read -p "Topping must be 1-8. choose topping $c [1-8]" selections[$a]
         fi
            ((c++))
-           ((a++))
+           ((a++)) 
     done
 sleep 1
 #listing summery of toppings
 echo ""
-echo "you have selected ${options[${selections[0]}-1]} , ${options[${selections[1]}-1]} , ${options[${selections[2]}-1]} , ${options[${selections[3]}-1]} ,excellent choice "
+echo -e "you have selected:
+\n${options[${selections[0]}-1]} for ---- ${price[1]}
+\n${options[${selections[1]}-1]} for ---------- ${price[1]}
+\n${options[${selections[2]}-1]} for ----- ${price[1]} 
+\n${options[${selections[3]}-1]} for ------- ${price[1]}
 
-echo "would you like to order drinks?" 
-read -p ">>" a
-if (($a == no)); then  
+\nexcellent choice!!! "
 echo ""
-echo "choos your drink"
-sleep 1
-echo "        drinks. "
-echo "--------------------------------"
-counter=1
-for t in ${drinks[@]}
-    do
-       echo "$counter. $t"
-       ((counter ++))
-    done
+echo "would you like to order drinks? [y / n]" 
+read input
+if [ $input == "y" ]; then  
+    echo ""
+
+    sleep 1
+    echo "        drinks. "
+    echo "--------------------------------"
+    counter=1
+    for t in ${drinks[@]}
+        do
+        echo "$counter. $t"
+        ((counter ++))
+        done
 
 #ask order type
-         read -p "choos drink [1-3]" selections[$a]
-         if [ ${selections[$a]} -gt 3 ]
-          then
-          read -p "wrong order option, please choose again $c [1-3]" selections[$a]
-         fi
-         ((tc++))
-         ((ta++))        
-
+    read -p "choos drink [1-3]" selections[$a]
+    if [ ${selections[$a]} -gt 3 ]
+        then
+        read -p "wrong order option, please choose again $c [1-3]" selections[$a]
+    fi
+       
+echo $sub
 #list summary order
-sleep 1
+    sleep 1
+    echo ""
+    echo "you have selcted ${drinks[${selections[0]}-1]}  for ${price[2]}"
+    sleep 1
+echo "ok $name"
 echo ""
-echo "you have selcted ${drinks[${selections[0]}-1]} "
-sleep 4
+sleep 1
+echo  -e "your total is:
+-------------------------------
+\ncrust ------------ ${price[0]}
+\n4-topping -------- \$11.96
+\ndrinks ----------- ${price[2]}
+\ntax ------------- \$2.24
+\nsub total ------- \$17.20 "
 else
-echo "you have ordred ...."
+sleep 1
+    echo  -e "ok $name
+     your total is:
+-------------------------------
+\ncrust ------------ ${price[0]}
+\n4-topping -------- \$11.96
+\ntax ------------- \$1.79
+\nsub total ------- \$15.75 "
 fi
