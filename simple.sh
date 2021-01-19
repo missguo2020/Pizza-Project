@@ -4,14 +4,15 @@
 clear
 
 #initiate variables
-c=1
-a=0
+c=1 #counter
+a=0 #array position
 order=(Pickup Delivery)
 size=(Small Medium Large XLarge)
 crust=(Thin NY_Style Sicilian)
-options=(Pepperoni Ham Tomatoes Onions Jalapeno Cheese Red_Pepper Black_Olives)
+toppings=(Pepperoni Ham Tomatoes Onions Jalapeno Cheese Red_Pepper Black_Olives)
 drinks=(Coke Ice_tea Beer)
 price=('$2' '$2.99' '$1')
+selections=0 #consider -1 array position is the picking up the last item 
 
 #greeting customer
 
@@ -28,20 +29,20 @@ sleep 1
 echo "        Order Type "
 echo "--------------------------------"
 counter=1
-for t in ${order[@]}
+for t in ${order[@]} 
     do
         echo "$counter. $t"
         ((counter ++))
     done
 
 #ask crust type
-         read -p "Choose Order [1-2]" selections[$a]
-    if [ ${selections[$a]} -gt 2 ]
-          then
-          read -p "Wrong order option, please choose again $c [1-2]" selections[$a]
-    #else/for non intiger inputs
+read -p "Choose Order [1-2]" selections[$a]
+while [ ${selections[$a]} -gt 2 ] #this avoids gt 2  /consider avoding inputs lt 1 or negative or laters
+    do #allows us to recursively ask to put correct inputs from user 
+        read -p "Wrong order option, please choose again [1-2]" selections[$a] 
+    #consider else/for non intiger inputs
     #read -p "wrong order option, please choose again $c [1-2]" selections[$a]
-    fi
+    done
 
 
 #list summary order
@@ -59,15 +60,15 @@ echo "-------------------------------"
 counter=1
 for t in ${size[@]}
     do
-echo "$counter. $t"
-((counter ++))
-done
+        echo "$counter. $t"
+        ((counter ++))
+    done
 
 read -p "Choose Size [1-4]" selections[$a]
-     if [ ${selections[$a]} -gt 4 ]
-then
-read -p "Wrong order option, please choose again $c [1-4]" selections[$a]
-fi
+while [ ${selections[$a]} -gt 4 ]
+    do
+        read -p "Wrong order option, please choose again [1-4]" selections[$a]
+    done
 
 echo ""
 echo "You have selected ${size[${selections[0]}-1]}, Great Choice! "
@@ -88,11 +89,11 @@ for t in ${crust[@]}
     done
 
 #ask order type
-         read -p "Choose Crust [1-3]" selections[$a]
-         if [ ${selections[$a]} -gt 3 ]
-          then
-          read -p "Wrong order option, please choose again $c [1-3]" selections[$a]
-         fi
+read -p "Choose Crust [1-3]" selections[$a]
+while [ ${selections[$a]} -gt 3 ]
+    do
+        read -p "Wrong order option, please choose again [1-3]" selections[$a]
+    done
 
 
 #list summary order
@@ -102,44 +103,44 @@ echo "You have selected ${crust[${selections[0]}-1]} crust for ${price[0]}, Grea
 sleep 1
 #give user a list of topping options
 echo ""
-echo "Choose your toppings, maximum of 4 toppings"
+echo "Choose 4 toppings" # consider to allow user to choose how many toppings , consider not allowing same topping selection
 sleep 2
 echo ""
 echo '         Toppings'
 echo "--------------------------------"
 counter=1
-for t in ${options[@]}
+for t in ${toppings[@]}
     do
         echo "$counter. $t"
         ((counter ++))
     done
 sleep 2
-#ask how many toppings they want
+#consider asking how many toppings they want
 #read -p "How many toppings would you like? Enter 1-8 >> " nt
 
 #while loop to ask topping question
 echo ""
 while [ $c -lt 5 ]
     do
-            read -p "Topping $c [1-8]" selections[$a] 
-        if [ ${selections[$a]} -gt 8 ] #ADD LESS THAN 1
-            then
-            read -p "Topping must be 1-8. Choose topping $c [1-8]" selections[$a]
-        fi
-           ((c++))
-           ((a++)) 
+        read -p "Topping $c [1-8]" selections[$a] 
+        while [ ${selections[$a]} -gt 8 ] #ADD LESS THAN 1
+            do
+                read -p "Topping must be 1-8. Choose topping $c [1-8]" selections[$a]
+            done
+                ((c++))
+                ((a++)) 
     done
 sleep 1
 #listing summery of toppings
 echo ""
 echo -e "You have selected:
-\n${options[${selections[0]}-1]} for ---- ${price[1]}
-\n${options[${selections[1]}-1]} for ---------- ${price[1]}
-\n${options[${selections[2]}-1]} for ----- ${price[1]} 
-\n${options[${selections[3]}-1]} for ------- ${price[1]}
+\n${toppings[${selections[0]}-1]} for ---- ${price[1]}
+\n${toppings[${selections[1]}-1]} for ---------- ${price[1]}
+\n${toppings[${selections[2]}-1]} for ----- ${price[1]} 
+\n${toppings[${selections[3]}-1]} for ------- ${price[1]}
 \nExcellent Choice!!! "
 echo ""
-echo "Would you like to order drink? [y / n]" 
+echo "Would you like to order drink? [y / n]" #consider else input
 read input
 if [ $input == "y" ]; then  
     echo ""
@@ -150,16 +151,16 @@ if [ $input == "y" ]; then
     counter=1
     for t in ${drinks[@]}
         do
-        echo "$counter. $t"
-        ((counter ++))
+            echo "$counter. $t"
+            ((counter ++))
         done
 
 #ask order type
     read -p "Choose Drink [1-3]" selections[$a]
-    if [ ${selections[$a]} -gt 3 ]
-        then
-        read -p "Wrong order option, Please choose again $c [1-3]" selections[$a]
-    fi
+    while [ ${selections[$a]} -gt 3 ]
+        do
+            read -p "Wrong order option, Please choose again  [1-3]" selections[$a]
+        done
        
 #list summary order
     sleep 1
@@ -169,13 +170,13 @@ if [ $input == "y" ]; then
     echo "Excellent, $name! "
     echo ""
     sleep 1
-    echo  -e "Your total is:
+    echo  -e "Your total is: 
 -------------------------------
     \nCrust ------------ ${price[0]}
-    \n4-Topping -------- \$11.96
+    \n4-Topping -------- \$11.96   
     \nDrinks ----------- ${price[2]}
     \nTax ------------- \$2.24
-    \nSub Total ------- \$17.20 "
+    \nSub Total ------- \$17.20 " # consider Topping ------ 4 * ${price[1]} 
 else
     sleep 1
         echo  -e "Excellent, $name!
