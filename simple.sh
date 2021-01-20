@@ -1,5 +1,15 @@
-
 #!/bin/bash
+
+#----------------------
+#Contributors: Yordanos, Li Jin, Yasemin
+#Date: 01/20/2021
+
+#Description: Pizza ordering process for Simply Delicious Pizza Place
+#Size, crust selection, toppings selection, displaying order summary and total price
+
+#-----------------------
+#Version: 1.12
+#-----------------------
 
 clear
 
@@ -48,7 +58,7 @@ while [ ${selections[$a]} -gt 2 ] #this avoids gt 2  /consider avoding inputs lt
 #list summary order
 echo ""
 sleep 1
-echo "You have selected order for ${order[${selections[0]}-1]}  "
+echo "You have selected order for ${order[${selections[$a]}-1]}  "
 sleep 1
 
 #pizza size
@@ -71,7 +81,7 @@ while [ ${selections[$a]} -gt 4 ]
     done
 
 echo ""
-echo "You have selected ${size[${selections[0]}-1]}, Great Choice! "
+echo "You have selected ${size[${selections[$a]}-1]}, Great Choice! "
 sleep 1
 
 
@@ -99,7 +109,7 @@ while [ ${selections[$a]} -gt 3 ]
 #list summary order
 sleep 1
 echo ""
-echo "You have selected ${crust[${selections[0]}-1]} crust for ${price[0]}, Great Choice! "
+echo "You have selected ${crust[${selections[$a]}-1]} crust for ${price[0]}, Great Choice! "
 sleep 1
 #give user a list of topping options
 echo ""
